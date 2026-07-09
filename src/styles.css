@@ -1,0 +1,235 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-espresso: var(--espresso);
+  --color-cream: var(--cream);
+  --color-gold: var(--gold);
+  --color-ink: var(--ink);
+}
+
+:root {
+  --radius: 0.25rem;
+
+  /* Brand palette — old-world, handcrafted */
+  --espresso: oklch(0.24 0.04 45);        /* #2b1a12 espresso brown */
+  --cream: oklch(0.94 0.025 82);          /* #f5ecdf cream/ivory */
+  --gold: oklch(0.72 0.11 78);            /* #c9a15c muted gold */
+  --ink: oklch(0.12 0.01 45);             /* deep near-black */
+
+  --background: var(--cream);
+  --foreground: var(--espresso);
+
+  --card: var(--cream);
+  --card-foreground: var(--espresso);
+  --popover: var(--cream);
+  --popover-foreground: var(--espresso);
+
+  --primary: var(--espresso);
+  --primary-foreground: var(--cream);
+  --secondary: oklch(0.88 0.02 82);
+  --secondary-foreground: var(--espresso);
+  --muted: oklch(0.90 0.02 82);
+  --muted-foreground: oklch(0.42 0.03 45);
+  --accent: var(--gold);
+  --accent-foreground: var(--espresso);
+
+  --destructive: oklch(0.55 0.20 27);
+  --destructive-foreground: var(--cream);
+
+  --border: oklch(0.85 0.02 60);
+  --input: oklch(0.85 0.02 60);
+  --ring: var(--gold);
+}
+
+.dark {
+  --background: var(--espresso);
+  --foreground: var(--cream);
+  --card: oklch(0.20 0.03 45);
+  --card-foreground: var(--cream);
+  --popover: oklch(0.20 0.03 45);
+  --popover-foreground: var(--cream);
+  --primary: var(--cream);
+  --primary-foreground: var(--espresso);
+  --secondary: oklch(0.30 0.03 45);
+  --secondary-foreground: var(--cream);
+  --muted: oklch(0.28 0.03 45);
+  --muted-foreground: oklch(0.75 0.02 60);
+  --accent: var(--gold);
+  --accent-foreground: var(--espresso);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: var(--gold);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    /* Lenis drives smoothness on desktop; keep native smooth as fallback. */
+    scroll-behavior: smooth;
+  }
+  /* Hide native cursor globally when the custom cursor is mounted. */
+  html.custom-cursor-on,
+  html.custom-cursor-on body,
+  html.custom-cursor-on * {
+    cursor: none !important;
+  }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: clip;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+}
+
+@utility chapter-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+@utility gold-rule {
+  display: inline-block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--color-accent);
+  vertical-align: middle;
+}
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) transparent;
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+    border-radius: 2px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@utility prose-chat {
+  & p {
+    margin: 0;
+  }
+  & p + p,
+  & p + ul,
+  & p + ol,
+  & ul + p,
+  & ol + p {
+    margin-top: 0.5rem;
+  }
+  & ul,
+  & ol {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+  & li {
+    margin: 0.15rem 0;
+  }
+  & strong {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+  & code {
+    font-family: ui-monospace, "SFMono-Regular", monospace;
+    font-size: 0.85em;
+    background: color-mix(in oklab, var(--color-accent) 15%, transparent);
+    padding: 0.05rem 0.35rem;
+    border-radius: 2px;
+  }
+}
+
+/* Cinematic page hero title — massive, bold, tightly tracked. */
+@utility page-hero-title {
+  font-size: clamp(3.25rem, 14vw, 12rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  text-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Very slow Ken Burns zoom/pan so photos never feel static. */
+@keyframes kenburns {
+  0% {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.08) translate3d(-1%, -1%, 0);
+  }
+  100% {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+}
+
+.kenburns {
+  animation: kenburns 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kenburns {
+    animation: none;
+  }
+}
+
+/* Hide scrollbars inside the fullscreen nav overlay on tall content. */
+html, body {
+  scrollbar-gutter: stable;
+}
