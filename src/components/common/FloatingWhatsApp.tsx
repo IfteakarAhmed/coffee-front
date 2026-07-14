@@ -1,10 +1,18 @@
 import { motion } from "motion/react";
 
+// contact.tsx এবং reservation.tsx ফাইলের জন্য buildWhatsAppUrl ফাংশনটি এখানে এক্সপোর্ট করা হলো
+export const buildWhatsAppUrl = (message?: string) => {
+  const PHONE = "8801818385378";
+  const defaultMsg = "Hi, I have a question about The Coffee Bean & Tea Leaf.";
+  const finalMsg = message || defaultMsg;
+  return `https://wa.me/${PHONE}?text=${encodeURIComponent(finalMsg)}`;
+};
+
 export function FloatingWhatsApp() {
   const PHONE = "8801818385378";
   const DEFAULT_MSG = "Hi, I have a question about The Coffee Bean & Tea Leaf.";
 
-  // Fast Refresh এরর ফিক্স করার জন্য ফাংশনটি কম্পোনেন্টের ভেতরে নিয়ে আসা হয়েছে
+  // Fast Refresh এরর ফিক্স করার জন্য ফাংশনটি কম্পোনেন্টের ভেতরে নিয়ে আসা হয়েছে
   const whatsappUrl = `https://wa.me/${PHONE}?text=${encodeURIComponent(DEFAULT_MSG)}`;
 
   return (
@@ -17,13 +25,13 @@ export function FloatingWhatsApp() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 2.4, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -3 }}
-      // আপনার আগের অরিজিনাল কফি কালার থিম (bg-espresso এবং shadow) বজায় রাখা হয়েছে
+      // আপনার আগের অরিজিনাল কফি কালার থিম (bg-espresso এবং shadow) বজায় রাখা হয়েছে
       className="group fixed bottom-6 right-6 z-40 flex items-center gap-3 rounded-full border border-accent/50 bg-espresso pl-5 pr-4 py-3 text-cream shadow-[0_18px_40px_-18px_var(--espresso)] backdrop-blur-md transition-colors duration-500 hover:border-accent hover:bg-accent hover:text-espresso sm:pl-6 sm:pr-5"
     >
       <span className="hidden text-[0.65rem] uppercase tracking-[0.28em] sm:inline">
         Chat with us
       </span>
-      {/* গোল আইকন হোল্ডারটি আগের মতোই রাখা হয়েছে, শুধু ভেতরে আসল হোয়াটসঅ্যাপ লোগো বসানো হয়েছে */}
+      {/* গোল আইকন হোল্ডারটি আগের মতোই রাখা হয়েছে, শুধু ভেতরে আসল হোয়াটসঅ্যাপ লোগো বসানো হয়েছে */}
       <span className="grid h-9 w-9 place-items-center rounded-full border border-accent/60 bg-accent/10 text-accent transition-colors duration-500 group-hover:border-espresso group-hover:bg-espresso group-hover:text-accent">
         <svg
           xmlns="http://www.w3.org/2000/svg"
