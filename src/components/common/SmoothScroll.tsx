@@ -20,5 +20,22 @@ export function SmoothScroll() {
       touchMultiplier: 1.4,
     });
 
+    // Expose for programmatic scroll (e.g. pill nav jumps).
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 
+    let rafId = 0;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    };
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+      delete (window as unknown as { __lenis?: Lenis }).__lenis;
+    };
+  }, []);
+
+  return null;
 }
